@@ -5,7 +5,7 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+//        maven { url "https://kotlin.bintray.com/kotlinx/" } //room
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.0'

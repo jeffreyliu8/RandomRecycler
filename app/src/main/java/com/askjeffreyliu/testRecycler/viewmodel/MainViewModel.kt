@@ -7,6 +7,8 @@ import com.askjeffreyliu.testRecycler.model.Article
 
 
 import com.askjeffreyliu.testRecycler.repository.MainRepository
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -16,7 +18,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val liveData = MutableLiveData<List<Article>>()
 
     fun getNews() {
-        repository.getNews("2019-04-23", liveData)
+        val cDate = Date()
+        val fDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cDate)
+        repository.getNews(fDate, liveData)
     }
 
     fun getLiveData() = liveData

@@ -32,12 +32,17 @@ class MainActivity : AppCompatActivity() {
         // Access the RecyclerView Adapter
         mAdapter = ItemAdapter()
         recyclerView.adapter = mAdapter
+
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getNews()
+        }
     }
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.getNews()
         viewModel.getLiveData().observe(this, Observer<List<Article>> {
+            swipeRefreshLayout.isRefreshing = false
             mAdapter.updateList(it)
         })
     }
