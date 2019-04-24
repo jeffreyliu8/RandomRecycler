@@ -22,8 +22,8 @@ class MainRepository(application: Application) {
         app.component.inject(this)
     }
 
-    fun getNews(date:String,liveData: MutableLiveData<List<Article>>) {
-        webService.getNews("ai", date, "publishedAt", "d1d760ed1c1e4b5189e8b810108ac762")
+    fun getNews(date: String, liveData: MutableLiveData<List<Article>>) {
+        webService.getNews("ai", date, date, "publishedAt", "d1d760ed1c1e4b5189e8b810108ac762")
             .enqueue(object : Callback<QueryResult> {
                 override fun onFailure(call: Call<QueryResult>, t: Throwable) {
                     println(t.localizedMessage)

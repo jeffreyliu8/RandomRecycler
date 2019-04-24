@@ -10,6 +10,7 @@ interface NewsWebService {
     fun getNews(
         @Query("q") query: String,
         @Query("from") from: String,
+        @Query("to") to: String,
         @Query("sortBy") sortBy: String?,
         @Query("apiKey") apiKey: String?
     ): Call<QueryResult>

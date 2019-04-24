@@ -52,8 +52,8 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-//    def room_version = "2.1.0-alpha06"
-//
-//    implementation "androidx.room:room-runtime:$room_version"
-//    kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    def room_version = "2.1.0-alpha06"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
 }
