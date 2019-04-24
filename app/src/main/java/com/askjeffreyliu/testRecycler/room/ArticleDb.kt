@@ -5,9 +5,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.askjeffreyliu.testRecycler.model.RoomArticle
+import com.askjeffreyliu.testRecycler.model.Article
 
-@Database(entities = arrayOf(RoomArticle::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Article::class), version = 1, exportSchema = false)
 abstract class ArticleDb : RoomDatabase() {
     abstract fun articleDao(): ArticleDao
 

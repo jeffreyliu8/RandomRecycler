@@ -2,7 +2,7 @@ package com.askjeffreyliu.testRecycler.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import com.askjeffreyliu.testRecycler.model.Article
 
 
@@ -15,13 +15,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = MainRepository(application)
 
-    private val liveData = MutableLiveData<List<Article>>()
+    fun getNewsFromDb(): LiveData<List<Article>> {
+        return repository.getNewsFromDb()
+    }
 
     fun getNews() {
         val cDate = Date()
         val fDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cDate)
-        repository.getNews(fDate, liveData)
+        repository.getNews(fDate)
     }
-
-    fun getLiveData() = liveData
 }
