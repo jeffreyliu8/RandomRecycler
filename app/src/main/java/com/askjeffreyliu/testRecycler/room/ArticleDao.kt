@@ -13,15 +13,15 @@ interface ArticleDao {
     @Query("SELECT * FROM Article ORDER BY date DESC,publishedAt DESC")
     fun getAll(): LiveData<List<Article>>
 
-    @Query("SELECT * FROM Article WHERE date == :date")
-    fun getByDate(date: String): List<Article>
+//    @Query("SELECT * FROM Article WHERE date == :date")
+//    fun getByDate(date: String): List<Article>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(articles: List<Article>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(article: Article)
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    fun insert(article: Article)
 
-    @Query("DELETE FROM Article")
-    fun deleteAll()
+//    @Query("DELETE FROM Article")
+//    fun deleteAll()
 }

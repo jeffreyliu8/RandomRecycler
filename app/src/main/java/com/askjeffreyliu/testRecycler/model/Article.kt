@@ -15,5 +15,5 @@ data class Article(
     @ColumnInfo(name = "urlToImage") val urlToImage: String?,
     @ColumnInfo(name = "publishedAt") val publishedAt: String?,
 
-    @ColumnInfo(name = "date") var date: String?
+    @ColumnInfo(name = "date") var date: Int? // e.g. 20190430
 ) : Serializable

@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 
 import com.askjeffreyliu.testRecycler.MyApplication
 import com.askjeffreyliu.testRecycler.endpoint.NewsWebService
+import com.askjeffreyliu.testRecycler.extension.formatToInt
+import com.askjeffreyliu.testRecycler.extension.formatToString
 import com.askjeffreyliu.testRecycler.model.Article
 import com.askjeffreyliu.testRecycler.model.QueryResult
 import com.askjeffreyliu.testRecycler.room.ArticleDb
@@ -13,6 +15,7 @@ import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 import javax.inject.Inject
 
 class MainRepository(application: Application) {
@@ -30,8 +33,14 @@ class MainRepository(application: Application) {
         return dao.getAll()
     }
 
-    fun getNews(date: String) {
-        webService.getNews("ai", date, date, "publishedAt", "d1d760ed1c1e4b5189e8b810108ac762")
+    fun getNews(date: Date) {
+        webService.getNews(
+            "ai",
+            date.formatToString(),
+            date.formatToString(),
+            "publishedAt",
+            "d1d760ed1c1e4b5189e8b810108ac762"
+        )
             .enqueue(object : Callback<QueryResult> {
                 override fun onFailure(call: Call<QueryResult>, t: Throwable) {
                     println(t.localizedMessage)
@@ -42,7 +51,7 @@ class MainRepository(application: Application) {
                         response.body()?.articles?.let {
                             doAsync {
                                 for (article in it) {
-                                    article.date = date
+                                    article.date = date.formatToInt()
                                 }
                                 dao.insertAll(it)
                             }

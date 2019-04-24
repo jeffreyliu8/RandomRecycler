@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = mAdapter
 
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getNews()
+            viewModel.refresh()
         }
     }
 
@@ -44,6 +44,6 @@ class MainActivity : AppCompatActivity() {
             swipeRefreshLayout.isRefreshing = false
             mAdapter.updateList(it)
         })
-        viewModel.getNews()
+        viewModel.load()
     }
 }
