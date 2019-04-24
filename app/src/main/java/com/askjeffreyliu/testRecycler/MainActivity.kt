@@ -1,39 +1,44 @@
 package com.askjeffreyliu.testRecycler
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.Menu
-import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+
+import com.askjeffreyliu.testRecycler.adapter.ItemAdapter
+import com.askjeffreyliu.testRecycler.model.Article
+import com.askjeffreyliu.testRecycler.viewmodel.MainViewModel
 
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mAdapter: ItemAdapter
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+        setupRecyclerView()
+        setupViewModel()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+    private fun setupRecyclerView() {
+        // Creates a vertical Layout Manager
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Access the RecyclerView Adapter
+        mAdapter = ItemAdapter()
+        recyclerView.adapter = mAdapter
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
+    private fun setupViewModel() {
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel.getNews()
+        viewModel.getLiveData().observe(this, Observer<List<Article>> {
+            mAdapter.updateList(it)
+        })
     }
 }
