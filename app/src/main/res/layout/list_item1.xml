@@ -47,7 +47,6 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:ellipsize="end"
-            android:gravity="center"
             android:text="desc"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
