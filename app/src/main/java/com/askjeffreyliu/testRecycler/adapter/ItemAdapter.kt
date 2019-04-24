@@ -1,11 +1,11 @@
 package com.askjeffreyliu.testRecycler.adapter
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 import com.askjeffreyliu.testRecycler.R
@@ -27,8 +27,10 @@ class ItemAdapter :
     private var typeMap = mutableMapOf<Int, Int>()
 
     fun updateList(list: List<Article>?) {
+        val diffCallback = DiffUtilCallback(mList, list)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         mList = list
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -60,6 +62,11 @@ class ItemAdapter :
     override fun getItemCount(): Int {
         val lengthWithoutLoading = mList?.size ?: 0
         return lengthWithoutLoading + 1
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+//        super.onBindViewHolder(holder, position, payloads)
+        onBindViewHolder(holder, position)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

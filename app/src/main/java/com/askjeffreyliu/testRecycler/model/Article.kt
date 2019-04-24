@@ -3,6 +3,7 @@ package com.askjeffreyliu.testRecycler.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 data class Article(
@@ -15,4 +16,4 @@ data class Article(
     @ColumnInfo(name = "publishedAt") val publishedAt: String?,
 
     @ColumnInfo(name = "date") var date: String?
-)
+) : Serializable
