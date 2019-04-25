@@ -13,7 +13,7 @@ import com.askjeffreyliu.testRecycler.model.Article
 import com.squareup.picasso.Picasso
 
 class ItemAdapter :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<MyViewHolder>() {
 
     companion object {
         const val TYPE_ZERO = 0
@@ -32,22 +32,22 @@ class ItemAdapter :
         diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return when (viewType) {
             TYPE_ZERO -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.list_item1, parent, false)
-                Type1ViewHolder(view)
+                MyViewHolder(view)
             }
             TYPE_ONE -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.list_item2, parent, false)
-                Type2ViewHolder(view)
+                MyViewHolder(view)
             }
             TYPE_TWO -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.list_item3, parent, false)
-                Type3ViewHolder(view)
+                MyViewHolder(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
@@ -57,18 +57,13 @@ class ItemAdapter :
         return mList?.size ?: 0
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int, payloads: MutableList<Any>) {
 //        super.onBindViewHolder(holder, position, payloads)
         onBindViewHolder(holder, position)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is Type1ViewHolder -> holder.bind(mList!![position])
-            is Type2ViewHolder -> holder.bind(mList!![position])
-            is Type3ViewHolder -> holder.bind(mList!![position])
-            else -> throw IllegalArgumentException()
-        }
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.bind(mList!![position])
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -83,48 +78,20 @@ interface UpdateViewHolder {
     fun bind(article: Article)
 }
 
-class Type1ViewHolder(view: View) : RecyclerView.ViewHolder(view), UpdateViewHolder {
+class MyViewHolder(view: View) : RecyclerView.ViewHolder(view), UpdateViewHolder {
     private val titleTextView: TextView = view.findViewById(R.id.titleTextView)
-    private val summaryTextView: TextView = view.findViewById(R.id.summaryTextView)
-    private val dateTextView: TextView = view.findViewById(R.id.dateTextView)
+    private val summaryTextView: TextView? = view.findViewById(R.id.summaryTextView)
+    private val dateTextView: TextView? = view.findViewById(R.id.dateTextView)
     private val imageView: ImageView = view.findViewById(R.id.imageView)
 
     override fun bind(article: Article) {
         titleTextView.text = article.title
-        summaryTextView.text = article.description
-        dateTextView.text = article.publishedAt
-        if (article.urlToImage.isNullOrBlank()) {
-            imageView.visibility = View.GONE
-        } else {
-            imageView.visibility = View.VISIBLE
-            Picasso.get().load(article.urlToImage).into(imageView)
+        summaryTextView?.let {
+            summaryTextView.text = article.description
         }
-    }
-}
-
-class Type2ViewHolder(view: View) : RecyclerView.ViewHolder(view), UpdateViewHolder {
-    private val titleTextView: TextView = view.findViewById(R.id.titleTextView)
-    private val summaryTextView: TextView = view.findViewById(R.id.summaryTextView)
-    private val imageView: ImageView = view.findViewById(R.id.imageView)
-
-    override fun bind(article: Article) {
-        titleTextView.text = article.title
-        summaryTextView.text = article.description
-        if (article.urlToImage.isNullOrBlank()) {
-            imageView.visibility = View.GONE
-        } else {
-            imageView.visibility = View.VISIBLE
-            Picasso.get().load(article.urlToImage).into(imageView)
+        dateTextView?.let {
+            dateTextView.text = article.publishedAt
         }
-    }
-}
-
-class Type3ViewHolder(view: View) : RecyclerView.ViewHolder(view), UpdateViewHolder {
-    private val titleTextView: TextView = view.findViewById(R.id.titleTextView)
-    private val imageView: ImageView = view.findViewById(R.id.imageView)
-
-    override fun bind(article: Article) {
-        titleTextView.text = article.title
         if (article.urlToImage.isNullOrBlank()) {
             imageView.visibility = View.GONE
         } else {
