@@ -29,8 +29,8 @@ class MainRepository(application: Application) {
         app.component.inject(this)
     }
 
-    fun getNewsFromDb(): LiveData<List<Article>> {
-        return dao.getAll()
+    fun getNewsInDates(oldDate: Int, newDate: Int): LiveData<List<Article>> {
+        return dao.getWithInRange(oldDate,newDate)
     }
 
     fun getNews(date: Date) {

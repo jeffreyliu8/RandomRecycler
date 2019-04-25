@@ -40,10 +40,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModel.getNewsFromDb().observe(this, Observer<List<Article>> {
+        viewModel.getLiveData().observe(this, Observer<List<Article>> {
             swipeRefreshLayout.isRefreshing = false
             mAdapter.updateList(it)
         })
-        viewModel.load()
     }
 }

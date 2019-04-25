@@ -10,8 +10,8 @@ import com.askjeffreyliu.testRecycler.model.Article
 
 @Dao
 interface ArticleDao {
-    @Query("SELECT * FROM Article ORDER BY date DESC,publishedAt DESC")
-    fun getAll(): LiveData<List<Article>>
+    @Query("SELECT * FROM Article WHERE date >= :oldDate AND date <= :newDate ORDER BY date DESC,publishedAt DESC")
+    fun getWithInRange(oldDate: Int, newDate: Int): LiveData<List<Article>>
 
 //    @Query("SELECT * FROM Article WHERE date == :date")
 //    fun getByDate(date: String): List<Article>
