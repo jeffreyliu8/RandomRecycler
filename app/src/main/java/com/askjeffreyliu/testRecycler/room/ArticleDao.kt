@@ -22,6 +22,6 @@ interface ArticleDao {
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    fun insert(article: Article)
 
-//    @Query("DELETE FROM Article")
-//    fun deleteAll()
+    @Query("DELETE FROM Article")
+    fun deleteAll()
 }

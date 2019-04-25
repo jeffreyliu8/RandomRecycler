@@ -12,6 +12,7 @@ interface NewsWebService {
         @Query("from") from: String,
         @Query("to") to: String,
         @Query("sortBy") sortBy: String?,
-        @Query("apiKey") apiKey: String?
+        @Query("apiKey") apiKey: String?,
+        @Query("language") language: String?
     ): Call<QueryResult>
 }

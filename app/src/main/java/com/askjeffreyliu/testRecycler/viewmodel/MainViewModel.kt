@@ -58,6 +58,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      * When user first open this activity
      */
     private fun load() {
+        println("loading")
         val date = Calendar.getInstance().time
 
         // get the news for today
@@ -68,6 +69,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun loadOneMoreDay() {
+        println("loading one more day")
         // get today
         val calendar = Calendar.getInstance()
         calendar.time = range.value!!.first.formatToDate()

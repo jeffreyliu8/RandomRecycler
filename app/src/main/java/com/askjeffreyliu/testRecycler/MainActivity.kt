@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.askjeffreyliu.testRecycler.adapter.ItemAdapter
+import com.askjeffreyliu.testRecycler.extension.addOnScrolledToEnd
 import com.askjeffreyliu.testRecycler.model.Article
 import com.askjeffreyliu.testRecycler.viewmodel.MainViewModel
 
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         // Access the RecyclerView Adapter
         mAdapter = ItemAdapter()
         recyclerView.adapter = mAdapter
+
+        recyclerView.addOnScrolledToEnd {
+            viewModel.loadOneMoreDay()
+        }
 
         swipeRefreshLayout.setOnRefreshListener {
             viewModel.refresh()

@@ -30,7 +30,13 @@ class MainRepository(application: Application) {
     }
 
     fun getNewsInDates(oldDate: Int, newDate: Int): LiveData<List<Article>> {
-        return dao.getWithInRange(oldDate,newDate)
+        return dao.getWithInRange(oldDate, newDate)
+    }
+
+    fun clear() {
+        doAsync {
+            dao.deleteAll()
+        }
     }
 
     fun getNews(date: Date) {
@@ -39,7 +45,8 @@ class MainRepository(application: Application) {
             date.formatToString(),
             date.formatToString(),
             "publishedAt",
-            "d1d760ed1c1e4b5189e8b810108ac762"
+            "d1d760ed1c1e4b5189e8b810108ac762",
+            "en"
         )
             .enqueue(object : Callback<QueryResult> {
                 override fun onFailure(call: Call<QueryResult>, t: Throwable) {

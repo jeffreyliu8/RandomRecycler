@@ -19,7 +19,6 @@ class ItemAdapter :
         const val TYPE_ZERO = 0
         const val TYPE_ONE = 1
         const val TYPE_TWO = 2
-        const val TYPE_LOADING = -1
     }
 
     private var mList: List<Article>? = null
@@ -50,18 +49,12 @@ class ItemAdapter :
                     .inflate(R.layout.list_item3, parent, false)
                 Type3ViewHolder(view)
             }
-            TYPE_LOADING -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.list_item_loading, parent, false)
-                LoadViewHolder(view)
-            }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
 
     override fun getItemCount(): Int {
-        val lengthWithoutLoading = mList?.size ?: 0
-        return lengthWithoutLoading + 1
+        return mList?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -74,16 +67,11 @@ class ItemAdapter :
             is Type1ViewHolder -> holder.bind(mList!![position])
             is Type2ViewHolder -> holder.bind(mList!![position])
             is Type3ViewHolder -> holder.bind(mList!![position])
-            is LoadViewHolder -> print("loading")
             else -> throw IllegalArgumentException()
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (itemCount == position + 1) {
-            return TYPE_LOADING
-        }
-
         if (!typeMap.containsKey(position)) {
             typeMap[position] = (TYPE_ZERO..TYPE_TWO).random()
         }
@@ -145,5 +133,3 @@ class Type3ViewHolder(view: View) : RecyclerView.ViewHolder(view), UpdateViewHol
         }
     }
 }
-
-class LoadViewHolder(view: View) : RecyclerView.ViewHolder(view)
